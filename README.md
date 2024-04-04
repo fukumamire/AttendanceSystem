@@ -1,7 +1,7 @@
 ## 環境構築
 
 ### Dockerビルド
-1.git clone git@github.com:fukumamire/attendance.git
+1.git clone git@github.com:fukumamire/AttendanceSystem.git
 
 2.DockerDesktopアプリを立ち上げる
 
