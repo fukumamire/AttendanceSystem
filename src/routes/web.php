@@ -13,6 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// ログインページ
+Route::get('/login', function () {
+    return view('auth.login');
+});
+
+
+// 会員登録ページ
+Route::get('/register', function () {
+    return view('auth.register');
+});
+// 便宜　打刻ページの表示
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.stamp');
 });

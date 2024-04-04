@@ -1,0 +1,59 @@
+.login__content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* ビューポートの高さを100%に設定 */
+  max-width: 1230px;
+  margin: 0 auto; /* 左右のマージンを自動に設定して中央寄せ */
+}
+
+@media screen and (max-width: 1230px) {
+  .login-form__content {
+    width: 60vw;
+  }
+}
+
+.login-form__heading {
+  margin-top: 20px;
+}
+
+form{
+  width: 300px;
+  margin: 0 auto;
+}
+
+.form__group {
+  width: 100%;
+  max-width: none;
+  margin-bottom:10px;
+}
+
+input {
+  width: 100%;
+  max-width: 500px;
+  height: 30px; /* 入力欄の高さを30pxに設定 */
+}
+
+.login-button {
+  width: 100%;
+  background-color: #2029a9;
+  color: white;
+  border-radius: 5px;
+  height: 30px;
+}
+
+.register-link{
+  margin-bottom:50px;
+}
+p{
+  font-size: 12px;
+}
+
+a{
+  display: block;
+  text-align: center; 
+  color:#2029a9;  
+  font-size: 12px;
+  font-weight: bold;
+}
