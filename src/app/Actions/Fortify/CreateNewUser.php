@@ -19,8 +19,10 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
+        // 会員登録処理
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
+            // 「姓と名」「姓と名と名」の間に半角及び全角のスペースを入れるように
+            'name' => ['required', 'string', 'max:255', 'regex:/^[^ ]+[ 　]+[^ ]+(?:[ 　]+[^ ]+)?$/'],
             'email' => [
                 'required',
                 'string',
@@ -29,6 +31,7 @@ class CreateNewUser implements CreatesNewUsers
                 Rule::unique(User::class),
             ],
             'password' => $this->passwordRules(),
+            
         ])->validate();
 
         return User::create([

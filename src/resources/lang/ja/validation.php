@@ -130,9 +130,26 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'name' => [
+            'required' => '名前の記載もれです。',
+            'regex' => '名前は「姓 名」または「姓 名 名」の形式で入力してください。',
+
         ],
+        'email' => [
+            'required' => 'メールアドレスの記載もれです。',
+            'email' => 'メールアドレスの形式が正しくありません。',
+            'unique' => 'このメールアドレスは既に使用されています。',
+
+        ],
+        'password' => [
+            'required' => 'パスワードは必須です。',
+            'string' => 'パスワードは文字列で入力してください。',
+            'min' => 'パスワードは最低8文字以上で入力してください。',
+            'confirmed' => 'パスワードと確認用パスワードが一致しません。',
+        ],
+        // 'attribute-name' => [
+        //     'rule-name' => 'custom-message',
+        // ],
     ],
 
     /*
@@ -146,5 +163,13 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => '名前',
+        'email' => 'メールアドレス',
+        'password' => 'パスワード',
+        'password_confirmation' => '確認用パスワード',
+    ],
+
+
+
 ];
