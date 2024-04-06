@@ -19,10 +19,10 @@ Route::get('/login', function () {
 });
 
 
-// 会員登録ページ
-Route::get('/register', function () {
-    return view('auth.register');
-});
+// // 会員登録ページ
+// Route::get('/register', function () {
+//     return view('auth.register');
+// });
 // 便宜　打刻ページの表示
 Route::get('/', function () {
     return view('auth.stamp');

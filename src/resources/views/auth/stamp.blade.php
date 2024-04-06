@@ -8,8 +8,11 @@
     <div class="header__links">
         <a href="/">ホーム</a>
         <a href="">日付一覧</a>
-        <a href="">ログアウト</a>
-        {{-- <a href="{{ route('logout') }}">ログアウト</a> --}}
+        <form action="{{ route('logout') }}" method="POST">
+        @csrf  
+        <button type="submit" class="logout-button">ログアウト</button>
+
+
         {{-- <a href="{{ route('dateList') }}">日付一覧</a> --}}
         
     </div>

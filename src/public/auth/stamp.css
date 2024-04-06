@@ -1,13 +1,14 @@
 .header__links {
     display: flex;
     justify-content:flex-end;
+    align-items: center;
 }
 /* リンク同士に余白を作る、CSSを使用して各リンクにマージンを追加 */
-.header__links a {
-    margin-right: 10px; /* 右側に10pxの余白を追加 */
+.header__links a, .header__links form{
+    margin-right: 20px; /* 右側に20pxの余白を追加 */
 }
 
-.header__links a:last-child {
+.header__links a:last-child, .header__links form:last-child  {
     margin-right: 0; /* 最後のリンクには右側の余白を追加しない */
 }
 
