@@ -4,8 +4,19 @@
     align-items: center;
 }
 /* リンク同士に余白を作る、CSSを使用して各リンクにマージンを追加 */
-.header__links a, .header__links form{
+.header__links a{
     margin-right: 20px; /* 右側に20pxの余白を追加 */
+}
+
+
+.header__links form {
+    display: inline-block;
+
+}
+/* ログアウトボタン */
+.logout-button {
+    padding: 1px; /* ボタンの内側の余白を調整 */
+    font-size: 14px; /* ボタンのテキストサイズを調整 */
 }
 
 .header__links a:last-child, .header__links form:last-child  {
