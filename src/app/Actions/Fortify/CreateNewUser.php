@@ -22,12 +22,12 @@ class CreateNewUser implements CreatesNewUsers
         // 会員登録処理
         Validator::make($input, [
             // 「姓と名」「姓と名と名」の間に半角及び全角のスペースを入れるように
-            'name' => ['required', 'string', 'max:255', 'regex:/^[^ ]+[ 　]+[^ ]+(?:[ 　]+[^ ]+)?$/'],
+            'name' => ['required', 'string', 'max:191', 'regex:/^[^ ]+[ 　]+[^ ]+(?:[ 　]+[^ ]+)?$/'],
             'email' => [
                 'required',
                 'string',
                 'email',
-                'max:255',
+                'max:191',
                 Rule::unique(User::class),
             ],
             'password' => $this->passwordRules(),
