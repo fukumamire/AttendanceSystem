@@ -21,7 +21,7 @@
 @section('content')
 <div class="stamp__content">
   <div class="welcome-message">
-  {{-- {{ Auth::user()->name }} --}}
+  {{ Auth::user()->name }}
   
   さんお疲れ様です！
   </div>
