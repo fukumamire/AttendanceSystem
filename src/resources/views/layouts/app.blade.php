@@ -26,7 +26,9 @@
   
   <footer class="footer">
     <div class="footer__inner">
-      <h3>Atte,inc</h3>
+        <small class="footer__text">
+          Atte,inc
+        </small>
     </div>
   </footer>
 </body>

@@ -28,7 +28,12 @@ Route::get('/', function () {
     return view('auth.stamp');
 });
 
+// // ログアウト　２０２４年４月１０日現在不要　FortifyServiceProviderのregisterメソッド があるため、コメントアウト
+// Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+//     ->name('logout');
 
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-    ->middleware('auth')
-    ->name('logout');
+
+    //ログアウト２０２４年４月１０日時点ではミドルウェアを使用していないのでコメントOFF
+    // Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+//     ->middleware('auth')
+//     ->name('logout');

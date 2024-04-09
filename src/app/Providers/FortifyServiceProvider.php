@@ -25,7 +25,7 @@ class FortifyServiceProvider extends ServiceProvider
         {
             public function toResponse($request)
             {
-                return redirect('/');
+                return redirect('/login');
             }
         });
     }
@@ -58,7 +58,6 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::loginView(function () {
             return view('auth.login');
         });
-
 
 
         RateLimiter::for('login', function (Request $request) {
