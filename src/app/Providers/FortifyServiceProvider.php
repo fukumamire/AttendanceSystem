@@ -16,6 +16,8 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\LogoutResponse;
 
+use Illuminate\Support\Facades\Validator;
+
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
@@ -62,11 +64,18 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         // ログインバリデーションのカスタマイズ
+        
         Fortify::authenticateUsing(function (Request $request) {
-            $request->validate([
+            $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
                 'password' => 'required',
             ]);
+
+            if ($validator->fails()) {
+                return redirect('/login')
+                ->withErrors($validator)
+                ->withInput();
+            }
 
             $user = User::where('email', $request->email)->first();
 
@@ -74,6 +83,7 @@ class FortifyServiceProvider extends ServiceProvider
                 return $user;
             }
         });
+
 
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;

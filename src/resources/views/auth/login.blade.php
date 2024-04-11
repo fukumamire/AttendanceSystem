@@ -14,13 +14,13 @@
     <div class="form__group">
       <input type="email" name="email" placeholder="メールアドレス"  value="{{ old('email') }}" required  />
       @error('email')
-        <div class="alert alert-danger">{{ $message }}</div>
+        <div class="alert alert-danger">{{ $errors->first('email') }}</div>
       @enderror
     </div>
     <div class="form__group">
       <input type="password" name="password" placeholder="パスワード" required>
       @error('password')
-        <div class="alert alert-danger">{{ $message }}</div>
+        <div class="alert alert-danger">{{ $errors->first('password') }}</div>
       @enderror
     </div>
     <div class="form__button">
