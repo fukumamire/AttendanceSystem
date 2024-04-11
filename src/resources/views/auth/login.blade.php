@@ -13,9 +13,15 @@
     @csrf
     <div class="form__group">
       <input type="email" name="email" placeholder="メールアドレス"  value="{{ old('email') }}" required  />
+      @error('email')
+        <div class="alert alert-danger">{{ $message }}</div>
+      @enderror
     </div>
     <div class="form__group">
       <input type="password" name="password" placeholder="パスワード" required>
+      @error('password')
+        <div class="alert alert-danger">{{ $message }}</div>
+      @enderror
     </div>
     <div class="form__button">
       <button type="submit" class="login-button">ログイン</button>

@@ -7,6 +7,8 @@ use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Cache\RateLimiting\Limit;
+use App\Models\User; // Userモデルをインポート
+use Illuminate\Support\Facades\Hash; // Hashファサードをインポート
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
@@ -59,6 +61,19 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.login');
         });
 
+        // ログインバリデーションのカスタマイズ
+        Fortify::authenticateUsing(function (Request $request) {
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
+
+            $user = User::where('email', $request->email)->first();
+
+            if ($user && Hash::check($request->password, $user->password)) {
+                return $user;
+            }
+        });
 
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;
