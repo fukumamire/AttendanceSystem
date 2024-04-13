@@ -33,7 +33,12 @@ Route::get('/', function () {
 //     ->name('logout');
 
 
-    //ログアウト２０２４年４月１０日時点ではミドルウェアを使用していないのでコメントOFF
-    // Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+//ログアウト２０２４年４月１０日時点ではミドルウェアを使用していないのでコメントOFF
+// Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
 //     ->middleware('auth')
 //     ->name('logout');
+
+//便宜　日付一覧
+Route::get('/attendance', function () {
+    return view('auth.date');
+});

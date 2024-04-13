@@ -7,7 +7,7 @@
 @section('link')
     <div class="header__links">
         <a href="/">ホーム</a>
-        <a href="">日付一覧</a>
+        <a href="/attendance">日付一覧</a>
         <form action="{{ route('logout') }}" method="POST">
         @csrf  
         <button type="submit" class="logout-button">ログアウト</button>
