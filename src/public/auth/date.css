@@ -29,11 +29,11 @@
 
 
 .table__wrap {
-    display: flex;
-    flex-wrap: wrap;
+    display: flex;/* フレックスコンテナとして扱う　フレックスコンテナ内の子要素は、フレックスアイテムとなる */
+    flex-wrap: wrap;/*レックスアイテムがコンテナの幅を超えた場合に、アイテムを次の行に折り返す  */
     justify-content: space-between;
-    width: 80%;
-    margin: auto;
+    width: 80%;/*  親要素の幅の80%*/
+    margin: auto;/* この要素の上下左右のマージンを自動的に設定します。これにより、要素が親要素の中央に配置 */
 }
 
 .attendance__table {
