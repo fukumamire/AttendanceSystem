@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/date.css') }}">
+    <link rel="stylesheet" href="{{ asset('auth/date.css') }}">
     
 @endsection
 @section('link')
@@ -28,4 +28,5 @@
                 <th class="table__header">休憩時間</th>
                 <th class="table__header">勤務時間</th>
             </tr>
+        </table>    
 @endsection
