@@ -57,23 +57,5 @@
       </td>
     </tr>
   </table>  
-    {{-- <form action="{{ route('startWork') }}" method="post">
-        @csrf
-        <button type="submit">勤務開始</button>
-    </form>
-    <form action="{{ route('endWork') }}" method="post">
-        @csrf
-        <button type="submit">勤務終了時間</button>
-    </form>
-    <form action="{{ route('startBreak') }}" method="post">
-        @csrf
-        <button type="submit">休憩開始</button>
-    </form>
-    <form action="{{ route('endBreak') }}" method="post">
-        @csrf
-        <button type="submit">休憩終了</button>
-    </form> --}}
-</table>
-
 </div>
 @endsection
