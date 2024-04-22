@@ -6,6 +6,8 @@ use App\Models\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Models\WorkBreak;
+
 
 class AttendanceController extends Controller
 {   
@@ -38,24 +40,56 @@ class AttendanceController extends Controller
         return redirect('/')->with('status', '勤務終了しました');
     }
 
-    // 何度も休憩を開始し、終了する
     public function startBreak()
     {
         $attendance = Attendance::where('user_id', Auth::id())->latest()->first();
-        $attendance->start_break = Carbon::now();
-        $attendance->save();
+        if ($attendance) {
+            $break = new WorkBreak();
+            $break->attendance_id = $attendance->id;
+            $break->start_break = Carbon::now();
+            $break->save();
 
-        return redirect('/')->with('status', '休憩開始しました');
+            return redirect('/')->with('status', '休憩開始しました');
+        } else {
+            return redirect('/')->with('error', '出勤記録が見つかりませんでした');
+        }
     }
 
     public function endBreak()
     {
-        $attendance = Attendance::where('user_id', Auth::id())->latest()->first();
-        $attendance->end_break = Carbon::now();
-        $attendance->save();
+        $latestBreak = WorkBreak::where('attendance_id', Attendance::where('user_id', Auth::id())->latest()->first()->id)
+        ->whereNull('end_break')
+        ->latest()
+        ->first();
 
-        return redirect('/')->with('status', '休憩終了しました');
+        if ($latestBreak) {
+            $latestBreak->end_break = Carbon::now();
+            $latestBreak->save();
+
+            return redirect('/')->with('status', '休憩終了しました');
+        } else {
+            return redirect('/')->with('error', '休憩開始が記録されていません');
+        }
     }
+
+    // // 何度も休憩を開始し、終了する
+    // public function startBreak()
+    // {
+    //     $attendance = Attendance::where('user_id', Auth::id())->latest()->first();
+    //     $attendance->start_break = Carbon::now();
+    //     $attendance->save();
+
+    //     return redirect('/')->with('status', '休憩開始しました');
+    // }
+
+    // public function endBreak()
+    // {
+    //     $attendance = Attendance::where('user_id', Auth::id())->latest()->first();
+    //     $attendance->end_break = Carbon::now();
+    //     $attendance->save();
+
+    //     return redirect('/')->with('status', '休憩終了しました');
+    // }
 
     public function calculateDailyWorkTime()
     {

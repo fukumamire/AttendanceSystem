@@ -14,7 +14,7 @@ class RemoveBreakColumnsFromAttendancesTable extends Migration
     public function up()
     {
         Schema::table('attendances', function (Blueprint $table) {
-            //
+            $table->dropColumn(['start_break', 'end_break']);
         });
     }
 
@@ -26,7 +26,8 @@ class RemoveBreakColumnsFromAttendancesTable extends Migration
     public function down()
     {
         Schema::table('attendances', function (Blueprint $table) {
-            //
+            $table->datetime('start_break')->nullable();
+            $table->datetime('end_break')->nullable();
         });
     }
 }
