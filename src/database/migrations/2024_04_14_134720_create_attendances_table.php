@@ -18,8 +18,6 @@ class CreateAttendancesTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->datetime('start_work')->nullable();
             $table->datetime('end_work')->nullable();
-            $table->datetime('start_break')->nullable();
-            $table->datetime('end_break')->nullable();
             $table->timestamps();
         });
     }
