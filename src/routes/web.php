@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use App\Http\Controllers\AttendanceController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,3 +44,13 @@ Route::get('/', function () {
 Route::get('/attendance', function () {
     return view('auth.date');
 });
+
+
+
+//勤務時間関係
+Route::post('/start-work', [AttendanceController::class, 'startWork']);
+Route::post('/end-work', [AttendanceController::class, 'endWork']);
+Route::post('/start-break', [AttendanceController::class, 'startBreak']);
+Route::post('/end-break', [AttendanceController::class, 'endBreak']);
+
+

@@ -26,8 +26,10 @@ class AttendanceController extends Controller
             $attendance->user_id = Auth::id();
             $attendance->start_work = Carbon::now();
             $attendance->save();
+        } else {
+            // 既に出勤記録が存在する場合の処理
+            return redirect('/')->with('error', '既に出勤記録が存在します');
         }
-
         return redirect('/')->with('status', '勤務開始しました');
     }
 
@@ -72,24 +74,6 @@ class AttendanceController extends Controller
         }
     }
 
-    // // 何度も休憩を開始し、終了する
-    // public function startBreak()
-    // {
-    //     $attendance = Attendance::where('user_id', Auth::id())->latest()->first();
-    //     $attendance->start_break = Carbon::now();
-    //     $attendance->save();
-
-    //     return redirect('/')->with('status', '休憩開始しました');
-    // }
-
-    // public function endBreak()
-    // {
-    //     $attendance = Attendance::where('user_id', Auth::id())->latest()->first();
-    //     $attendance->end_break = Carbon::now();
-    //     $attendance->save();
-
-    //     return redirect('/')->with('status', '休憩終了しました');
-    // }
 
     public function calculateDailyWorkTime()
     {
@@ -119,4 +103,15 @@ class AttendanceController extends Controller
 
         return view('Auth.date', compact('hours', 'minutes'));
     }
+
+    //勤務記録を取得し日付一覧（date.blade.php)に表示させる
+    public function attendanceList()
+    {
+        $attendances = Attendance::with('user')->orderBy('start_work', 'desc')->get();
+        return view('auth.date', compact('attendances'));
+    }
+
 }
+
+
+
