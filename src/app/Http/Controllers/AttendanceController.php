@@ -104,11 +104,18 @@ class AttendanceController extends Controller
         return view('Auth.date', compact('hours', 'minutes'));
     }
 
-    //勤務記録を取得し日付一覧（date.blade.php)に表示させる
+    //勤務記録を取得し日付一覧whereDateメソッドを使用して特定の日付に一致する出勤記録（date.blade.php)に表示させる
     public function attendanceList()
     {
-        $attendances = Attendance::with('user')->orderBy('start_work', 'desc')->get();
-        return view('auth.date', compact('attendances'));
+        $displayDate = Carbon::now()->toDateString();
+
+        // 特定の日付に一致する出席記録を取得
+        $attendances = Attendance::with('user')
+        ->whereDate('start_work', $displayDate)
+            ->orderBy('start_work', 'desc')
+            ->get();
+
+        return view('auth.date', compact('attendances')); 
     }
 
 }

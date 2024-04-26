@@ -41,13 +41,13 @@
   <table class="buttons">
     <tr>
       <td>
-        <form class="inner-items-upper">
+        <form class="inner-items-upper" action="/start-work" method="POST">
           @csrf
           <button type="submit">勤務開始</button>
         </form>
       </td>
       <td>
-        <form class="inner-items-upper">
+        <form class="inner-items-upper" action="/end-work" method="POST">
           @csrf
           <button type="submit">勤務終了</button>
         </form>
@@ -56,13 +56,15 @@
 
     <tr>
       <td>
-        <form class="inner-items-lower">
+        <form class="inner-items-lower" action="/start-break" method="POST">
           @csrf
           <button type="submit">休憩開始</button>
         </form>
       </td>
       <td>
-        <form class="inner-items-lower">
+        <form class="inner-items-lower" action="/end-break" method="POST">
+          <input type="hidden" name="break_id" value="{{ $break_id }}">
+
           @csrf
           <button type="submit">休憩終了</button>
         </form>
