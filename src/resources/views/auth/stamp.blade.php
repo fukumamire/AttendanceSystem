@@ -63,7 +63,7 @@
       </td>
       <td>
         <form class="inner-items-lower" action="/end-break" method="POST">
-          <input type="hidden" name="break_id" value="{{ $break_id }}">
+          <input type="hidden" name="break_id" value=""{{ $break_id ?? '' ?? '' }}"">
 
           @csrf
           <button type="submit">休憩終了</button>
