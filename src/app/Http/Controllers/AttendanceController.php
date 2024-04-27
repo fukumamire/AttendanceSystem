@@ -36,10 +36,14 @@ class AttendanceController extends Controller
     public function endWork()
     {
         $attendance = Attendance::where('user_id', Auth::id())->latest()->first();
-        $attendance->end_work = Carbon::now();
-        $attendance->save();
+        if ($attendance) {
+            $attendance->end_work = Carbon::now();
+            $attendance->save();
 
-        return redirect('/')->with('status', '勤務終了しました');
+            return redirect('/')->with('status', '勤務終了しました');
+        } else {
+            return redirect('/')->with('error', '勤務開始または休憩終了ボタンを押してください。');
+        }
     }
 
     public function startBreak()
