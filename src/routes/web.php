@@ -18,7 +18,7 @@ use App\Http\Controllers\AttendanceController;
 // ログインページ
 Route::get('/login', function () {
     return view('auth.login');
-});
+})->middleware('guest');
 
 
 // // 会員登録ページ
@@ -48,9 +48,7 @@ Route::get('/attendance', function () {
 
 
 //勤務時間関係
-Route::post('/start-work', [AttendanceController::class, 'startWork']);
-Route::post('/end-work', [AttendanceController::class, 'endWork']);
-Route::post('/start-break', [AttendanceController::class, 'startBreak']);
-Route::post('/end-break', [AttendanceController::class, 'endBreak']);
-
-
+Route::post('/start-work', [AttendanceController::class, 'startWork'])->middleware('auth');
+Route::post('/end-work', [AttendanceController::class, 'endWork'])->middleware('auth');
+Route::post('/start-break', [AttendanceController::class, 'startBreak'])->middleware('auth');
+Route::post('/end-break', [AttendanceController::class, 'endBreak'])->middleware('auth');

@@ -10,7 +10,7 @@ use App\Models\WorkBreak;
 
 
 class AttendanceController extends Controller
-{   
+{
     // 勤務開始　日を跨いだ時点で翌日の出勤操作に切り替える 
     public function startWork()
     {
@@ -53,16 +53,16 @@ class AttendanceController extends Controller
 
             return redirect('/')->with('status', '休憩開始しました');
         } else {
-            return redirect('/')->with('error', '出勤記録が見つかりませんでした');
+            return redirect('/')->with('error', '勤務開始時間が記録されていません。勤務開始ボタンを押下してください');
         }
     }
 
     public function endBreak()
     {
         $latestBreak = WorkBreak::where('attendance_id', Attendance::where('user_id', Auth::id())->latest()->first()->id)
-        ->whereNull('end_break')
-        ->latest()
-        ->first();
+            ->whereNull('end_break')
+            ->latest()
+            ->first();
 
         if ($latestBreak) {
             $latestBreak->end_break = Carbon::now();
@@ -70,7 +70,7 @@ class AttendanceController extends Controller
 
             return redirect('/')->with('status', '休憩終了しました');
         } else {
-            return redirect('/')->with('error', '休憩開始が記録されていません');
+            return redirect('/')->with('error', '休憩開始ボタンを押下してください');
         }
     }
 
@@ -111,14 +111,10 @@ class AttendanceController extends Controller
 
         // 特定の日付に一致する出席記録を取得
         $attendances = Attendance::with('user')
-        ->whereDate('start_work', $displayDate)
+            ->whereDate('start_work', $displayDate)
             ->orderBy('start_work', 'desc')
             ->get();
 
-        return view('auth.date', compact('attendances')); 
+        return view('auth.date', compact('attendances'));
     }
-
 }
-
-
-
