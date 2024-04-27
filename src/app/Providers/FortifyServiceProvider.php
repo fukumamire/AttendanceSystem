@@ -54,17 +54,17 @@ class FortifyServiceProvider extends ServiceProvider
         //     return Limit::perMinute(5)->by($request->session()->get('login.id'));
         // });
 
-        //会員登録 
-        Fortify::registerView(function () {
-            return view('auth.register');
-        });
-        // ログイン画面
-        Fortify::loginView(function () {
-            return view('auth.login');
-        });
+        // //会員登録 
+        // Fortify::registerView(function () {
+        //     return view('auth.register');
+        // });
+        // // ログイン画面
+        // Fortify::loginView(function () {
+        //     return view('auth.login');
+        // });
 
         // ログインバリデーションのカスタマイズ
-        
+
         Fortify::authenticateUsing(function (Request $request) {
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
@@ -73,8 +73,8 @@ class FortifyServiceProvider extends ServiceProvider
 
             if ($validator->fails()) {
                 return redirect('/login')
-                ->withErrors($validator)
-                ->withInput();
+                    ->withErrors($validator)
+                    ->withInput();
             }
 
             $user = User::where('email', $request->email)->first();

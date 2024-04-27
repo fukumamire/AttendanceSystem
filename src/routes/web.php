@@ -15,30 +15,31 @@ use App\Http\Controllers\AttendanceController;
 |
 */
 
+
+// 会員登録ページ
+Route::get('/register', function () {
+    return view('auth.register');
+})->middleware('guest');
+
 // ログインページ
 Route::get('/login', function () {
     return view('auth.login');
 })->middleware('guest');
 
 
-// // 会員登録ページ
-// Route::get('/register', function () {
-//     return view('auth.register');
-// });
+
+// ログアウトのルート
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('logout');
+
+
 // 便宜　打刻ページの表示
 Route::get('/', function () {
     return view('auth.stamp');
 });
 
-// // ログアウト　２０２４年４月１０日現在不要　FortifyServiceProviderのregisterメソッド があるため、コメントアウト
-// Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-//     ->name('logout');
 
 
-//ログアウト２０２４年４月１０日時点ではミドルウェアを使用していないのでコメントOFF
-// Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-//     ->middleware('auth')
-//     ->name('logout');
 
 //便宜　日付一覧
 Route::get('/attendance', function () {
