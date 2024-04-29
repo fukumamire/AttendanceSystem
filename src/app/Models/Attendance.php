@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Attendance extends Model
 {
     use HasFactory;
+    
+    protected $fillable = ['user_id', 'start_work', 'end_work'];
+
     //WorkBreakモデル(休憩時間)とのリレーション
     public function workBreaks()
     {

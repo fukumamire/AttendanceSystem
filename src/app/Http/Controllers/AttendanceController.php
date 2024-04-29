@@ -14,6 +14,12 @@ class AttendanceController extends Controller
     // 勤務開始　日を跨いだ時点で翌日の出勤操作に切り替える 
     public function startWork()
     {
+        // ユーザーが認証されているかどうかを確認
+        if (!Auth::check()) {
+            // ユーザーが認証されていない場合、ログイン画面にリダイレクト
+            return redirect('/login')->with('error', 'ログインしてください。');
+        }
+
         // 現在の日付を取得
         $today = Carbon::today();
 
@@ -63,10 +69,21 @@ class AttendanceController extends Controller
 
     public function endBreak()
     {
-        $latestBreak = WorkBreak::where('attendance_id', Attendance::where('user_id', Auth::id())->latest()->first()->id)
+        // ユーザーの最新の出席記録を取得
+        $latestAttendance = Attendance::where('user_id', Auth::id())->latest()->first();
+
+
+        if (!$latestAttendance) {
+            return redirect('/')->with('error', '勤務開始時間が記録されていません。勤務開始ボタンを押下してください');
+        }
+
+        // 最新の休憩記録を取得
+        $latestBreak = WorkBreak::where('attendance_id', $latestAttendance->id)
             ->whereNull('end_break')
             ->latest()
             ->first();
+
+        // 最新の休憩記録が存在する場合、休憩終了時間を記録
 
         if ($latestBreak) {
             $latestBreak->end_break = Carbon::now();
@@ -76,6 +93,20 @@ class AttendanceController extends Controller
         } else {
             return redirect('/')->with('error', '休憩開始ボタンを押下してください');
         }
+
+        // $latestBreak = WorkBreak::where('attendance_id', Attendance::where('user_id', Auth::id())->latest()->first()->id)
+        //     ->whereNull('end_break')
+        //     ->latest()
+        //     ->first();
+
+        // if ($latestBreak) {
+        //     $latestBreak->end_break = Carbon::now();
+        //     $latestBreak->save();
+
+        //     return redirect('/')->with('status', '休憩終了しました');
+        // } else {
+        //     return redirect('/')->with('error', '休憩開始ボタンを押下してください');
+        // }
     }
 
 
