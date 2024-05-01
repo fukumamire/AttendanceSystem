@@ -7,18 +7,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\WorkBreak;
-
+use App\Models\User;
 
 class AttendanceController extends Controller
 {
     // 勤務開始　日を跨いだ時点で翌日の出勤操作に切り替える 
     public function startWork()
     {
-        // ユーザーが認証されているかどうかを確認
-        if (!Auth::check()) {
-            // ユーザーが認証されていない場合、ログイン画面にリダイレクト
-            return redirect('/login')->with('error', 'ログインしてください。');
-        }
+        // // ユーザーが認証されているかどうかを確認
+        // if (!Auth::check()) {
+        //     // ユーザーが認証されていない場合、ログイン画面にリダイレクト
+        //     return redirect('/login')->with('error', 'ログインしてください。');
+        // }
 
         // 現在の日付を取得
         $today = Carbon::today();

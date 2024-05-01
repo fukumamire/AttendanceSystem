@@ -82,13 +82,17 @@ class FortifyServiceProvider extends ServiceProvider
             if ($user && Hash::check($request->password, $user->password)) {
                 return $user;
             }
+            // // 認証に失敗した場合
+            // return redirect('/login')
+            //     ->withErrors(['email' => 'メールアドレスまたはパスワードが一致していません'])
+            //     ->withInput();
         });
 
 
-        RateLimiter::for('login', function (Request $request) {
-            $email = (string) $request->email;
+        // RateLimiter::for('login', function (Request $request) {
+        //     $email = (string) $request->email;
 
-            return Limit::perMinute(10)->by($email . $request->ip());
-        });
+        //     return Limit::perMinute(10)->by($email . $request->ip());
+        // });
     }
 }

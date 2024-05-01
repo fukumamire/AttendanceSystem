@@ -24,27 +24,27 @@ Route::get('/register', function () {
 // ログインページ
 Route::get('/login', function () {
     return view('auth.login');
-})->middleware('guest');
+})->middleware('auth');
 
 
 
 // ログアウトのルート
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->middleware('auth')
     ->name('logout');
 
 
-// 便宜　打刻ページの表示
+// 打刻ページの表示
 Route::get('/', function () {
     return view('auth.stamp');
-});
+})->middleware('auth');
 
 
 
-
-//便宜　日付一覧
+//日付一覧
 Route::get('/attendance', function () {
     return view('auth.date');
-});
+})->middleware('auth');
 
 
 
