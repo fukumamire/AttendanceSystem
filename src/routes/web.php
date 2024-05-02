@@ -24,7 +24,7 @@ Route::get('/register', function () {
 // ログインページ
 Route::get('/login', function () {
     return view('auth.login');
-})->middleware('auth');
+})->middleware('guest');
 
 
 
