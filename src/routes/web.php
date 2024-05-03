@@ -19,12 +19,12 @@ use App\Http\Controllers\AttendanceController;
 // 会員登録ページ
 Route::get('/register', function () {
     return view('auth.register');
-})->middleware('guest');
+})->middleware('guest')->name('resister');;
 
 // ログインページ
 Route::get('/login', function () {
     return view('auth.login');
-})->middleware('guest');
+})->middleware('guest')->name('login');
 
 
 

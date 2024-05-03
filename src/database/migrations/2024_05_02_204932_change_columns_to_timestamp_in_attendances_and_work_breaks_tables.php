@@ -14,7 +14,10 @@ class ChangeColumnsToTimestampInAttendancesAndWorkBreaksTables extends Migration
     public function up()
     {
         Schema::table('attendances,work_breaks', function (Blueprint $table) {
-            //
+            $table->timestamp('start_work')->change();
+            $table->timestamp('end_work')->change();
+            $table->timestamp('start_break')->change();
+            $table->timestamp('end_break')->change();
         });
     }
 
@@ -26,7 +29,10 @@ class ChangeColumnsToTimestampInAttendancesAndWorkBreaksTables extends Migration
     public function down()
     {
         Schema::table('attendances,work_breaks', function (Blueprint $table) {
-            //
+            $table->dateTime('start_work')->change();
+            $table->dateTime('end_work')->change();
+            $table->dateTime('start_break')->change();
+            $table->dateTime('end_break')->change();
         });
     }
 }
