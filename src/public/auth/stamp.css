@@ -27,6 +27,23 @@ stamp__content{
     margin: 0 auto; 
 }
 
+/* 成功のメッセージ */
+.alert-success{
+display: flex;
+justify-content: center;
+align-items: center;
+text-align: center; /* テキストも中央揃え */
+color: aquamarine;
+}
+
+/* 失敗のメッセージ */
+.alert-danger{
+display: flex;
+justify-content: center;
+align-items: center;
+text-align: center; /* テキストも中央揃え */
+color: deeppink;
+}
 .welcome-message {
     text-align: center;
     margin-top: 30px;

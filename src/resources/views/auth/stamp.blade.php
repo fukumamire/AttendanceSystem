@@ -22,13 +22,13 @@
 @section('content')
 <div class="stamp__content">
   @if (session('status'))
-        <div class="alert alert-success">
+        <div class="alert-success">
             {{ session('status') }}
         </div>
   @endif
 
   @if (session('error'))
-    <div class="alert alert-danger">
+    <div class="alert-danger">
         {{ session('error') }}
     </div>
   @endif
