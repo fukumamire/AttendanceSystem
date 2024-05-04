@@ -8,9 +8,9 @@
     <div class="header__links">
         <a href="/">ホーム</a>
         <a href="/attendance">日付一覧</a>
-        <form action="{{ route('logout') }}"  class="logout-button" method="POST">
+        <form class="logout-button" action="{{ route('logout') }}" method="POST">
           @csrf  
-          <button type="submit" class="logout-button">ログアウト</button>
+        <button type="submit" class="logout-button">ログアウト</button>
         </form>
 
         {{-- <a href="{{ route('dateList') }}">日付一覧</a> --}}
@@ -44,7 +44,7 @@
       <td>
         <form class="inner-items-upper" action="/start-work" method="POST">
           @csrf
-          <button type="submit"name="start_work"  {{ $hasAttendanceToday ?? '' ? 'disabled' : '' }}>勤務開始</button>
+          <button type="submit" name="start_work"  {{ $hasAttendanceToday ?? '' ? 'disabled' : '' }}>勤務開始</button>
         </form>
       </td>
       <td>

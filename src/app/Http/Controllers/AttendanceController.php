@@ -30,27 +30,39 @@ class AttendanceController extends Controller
     public function startWork(Request $request)
     {
         // ユーザーが認証されているかを確認
-
         if (!Auth::check()) {
             return redirect('login');
         }
 
-        // Attendanceモデルの新しいインスタンスを作成
-        $attendance = new Attendance;
+        // 現在の日付を取得
+        $today = Carbon::today();
 
-        // 必要なデータを設定
-        $attendance->user_id = Auth::id(); // 現在認証されているユーザーのIDを設定
-        $attendance->start_work = now(); // 現在の時間を開始時間として設定（now()ヘルパ関数を使用）
+        // ユーザーの最新の出席記録を取得
+        $latestAttendance = Attendance::where('user_id', Auth::id())
+            ->whereDate('start_work', $today)
+            ->latest()
+            ->first();
 
-        // データベースに保存
-        if ($attendance->save()) {
+        // ユーザーが既に今日の出席記録を作成していない場合にのみ、新しい出席記録を作成
+        if (!$latestAttendance) {
+            // Attendanceモデルの新しいインスタンスを作成
+            $attendance = new Attendance;
+
+            // 必要なデータを設定
+            $attendance->user_id = Auth::id(); // 現在認証されているユーザーのIDを設定
+            $attendance->start_work = now(); // 現在の時間を開始時間として設定（now()ヘルパ関数を使用）
+
+            // データベースに保存
+            $attendance->save();
+
             // 成功メッセージを表示して、リダイレクト
             return redirect()->back()->with('success', '勤務開始時間を記録しました。');
         } else {
-            // 保存失敗
-            return redirect()->back()->with('error', '勤務開始時間の記録に失敗しました。');
+            // 既に出席記録が存在する場合、エラーメッセージを表示して、リダイレクト
+            return redirect()->back()->with('error', '既に出勤済みです。');
         }
     }
+
     // // 勤務開始　日を跨いだ時点で翌日の出勤操作に切り替える 
     // public function startWork()
     // {
@@ -118,7 +130,7 @@ class AttendanceController extends Controller
 
 
         if (!$latestAttendance) {
-            return redirect('/')->with('error', '勤務開始時間が記録されていません。勤務開始ボタンを押下してください');
+            return redirect('/')->with('error', '休憩開始時間が記録されていません。休憩開始ボタンを押下してください');
         }
 
         // 最新の休憩記録を取得
