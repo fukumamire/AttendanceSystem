@@ -102,20 +102,6 @@ class AttendanceController extends Controller
         return redirect()->back()->with('success', '休憩開始しました');
     }
 
-    // public function startBreak()
-    // {
-    //     $attendance = Attendance::where('user_id', Auth::id())->latest()->first();
-    //     if ($attendance) {
-    //         $break = new WorkBreak();
-    //         $break->attendance_id = $attendance->id;
-    //         $break->start_break = Carbon::now();
-    //         $break->save();
-
-    //         return redirect('/')->with('success', '休憩開始しました');
-    //     } else {
-    //         return redirect('/')->with('error', '勤務開始時間が記録されていません。勤務開始ボタンを押下してください');
-    //     }
-    // }
 
     // 休憩終了
     public function endBreak(Request $request)
