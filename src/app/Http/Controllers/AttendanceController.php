@@ -63,37 +63,6 @@ class AttendanceController extends Controller
         }
     }
 
-    // // 勤務開始　日を跨いだ時点で翌日の出勤操作に切り替える 
-    // public function startWork()
-    // {
-    //     // ユーザーが認証されているかどうかを確認
-    //     if (!Auth::check()) {
-    //         // ユーザーが認証されていない場合、ログイン画面にリダイレクト
-    //         return redirect('/login')->with('error', 'ログインしてください。');
-    //     }
-    //     try {
-    //         // 現在の日付を取得
-    //         $today = Carbon::today();
-
-    //         // ユーザーの最新の出席記録を取得
-    //         $latestAttendance = Attendance::where('user_id', Auth::id())->latest()->first();
-
-    //         // 最新の出席記録が存在し、その日付が今日と同じでない場合、新しい出席記録を作成
-    //         if (!$latestAttendance || $latestAttendance->start_work->toDateString() !== $today->toDateString()) {
-    //             $attendance = new Attendance();
-    //             $attendance->user_id = Auth::id();
-    //             $attendance->start_work = Carbon::now();
-    //             $attendance->save();
-    //         } else {
-    //             // 既に出勤記録が存在する場合の処理
-    //             return redirect('/')->with('error', '既に出勤記録が存在します');
-    //         }
-    //         return redirect('/')->with('status', '勤務開始しました');
-    //     } catch (\Exception $e) {
-    //         Log::error('データベース操作中にエラーが発生しました: ' . $e->getMessage());
-    //         return redirect('/')->with('error', '勤務開始に失敗しました。管理者に連絡してください。');
-    //     }
-    // }
 
     public function endWork()
     {

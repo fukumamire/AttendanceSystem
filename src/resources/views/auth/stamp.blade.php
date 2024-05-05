@@ -44,7 +44,12 @@
       <td>
         <form class="inner-items-upper" action="/start-work" method="POST">
           @csrf
-          <button type="submit" name="start_work"  {{ $hasAttendanceToday ?? '' ? 'disabled' : '' }}>勤務開始</button>
+          @if(!$hasAttendanceToday)
+            <button class="form__item-button" type="submit" name="start_work">勤務開始</button>
+          @else
+            <button class="form__item-button" type="submit" name="start_work" disabled>勤務開始</button>
+          @endif
+
         </form>
       </td>
       <td>
