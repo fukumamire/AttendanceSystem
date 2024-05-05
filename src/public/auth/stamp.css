@@ -93,7 +93,7 @@ button:active {
 }
 
 .form__item-button[disabled] {
-    background-color: rgb(239, 233, 233);
+    background-color: rgb(246, 245, 245);
     color:#bbbabafd; 
     cursor: not-allowed; 
 }

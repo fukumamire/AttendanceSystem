@@ -79,30 +79,53 @@ class AttendanceController extends Controller
             return redirect('/')->with('error', '勤務開始または休憩終了ボタンを押してください。');
         }
     }
-
-    public function startBreak()
+    // 休憩開始
+    public function startBreak(Request $request)
     {
+        // ユーザーの最新の出席記録を取得
         $attendance = Attendance::where('user_id', Auth::id())->latest()->first();
-        if ($attendance) {
-            $break = new WorkBreak();
-            $break->attendance_id = $attendance->id;
-            $break->start_break = Carbon::now();
-            $break->save();
 
-            return redirect('/')->with('success', '休憩開始しました');
-        } else {
+        // 出席記録が存在しない場合はエラーメッセージを表示してリダイレクト
+        if (!$attendance) {
             return redirect('/')->with('error', '勤務開始時間が記録されていません。勤務開始ボタンを押下してください');
         }
+
+        // 新しい休憩記録を作成
+        $break = new WorkBreak();
+        $break->attendance_id = $attendance->id;
+        $break->start_break = Carbon::now();
+        $break->save();
+
+        // 休憩開始フラグをセッションに保存
+        $request->session()->put('is_break', true);
+
+        return redirect()->back()->with('success', '休憩開始しました');
     }
 
-    public function endBreak()
+    // public function startBreak()
+    // {
+    //     $attendance = Attendance::where('user_id', Auth::id())->latest()->first();
+    //     if ($attendance) {
+    //         $break = new WorkBreak();
+    //         $break->attendance_id = $attendance->id;
+    //         $break->start_break = Carbon::now();
+    //         $break->save();
+
+    //         return redirect('/')->with('success', '休憩開始しました');
+    //     } else {
+    //         return redirect('/')->with('error', '勤務開始時間が記録されていません。勤務開始ボタンを押下してください');
+    //     }
+    // }
+
+    // 休憩終了
+    public function endBreak(Request $request)
     {
         // ユーザーの最新の出席記録を取得
         $latestAttendance = Attendance::where('user_id', Auth::id())->latest()->first();
 
-
+        // 出席記録が存在しない場合はエラーメッセージを表示してリダイレクト
         if (!$latestAttendance) {
-            return redirect('/')->with('success', '休憩開始時間が記録されていません。休憩開始ボタンを押下してください');
+            return redirect('/')->with('error', '勤務開始時間が記録されていません。勤務開始ボタンを押下してください');
         }
 
         // 最新の休憩記録を取得
@@ -111,32 +134,20 @@ class AttendanceController extends Controller
             ->latest()
             ->first();
 
-        // 最新の休憩記録が存在する場合、休憩終了時間を記録
-
-        if ($latestBreak) {
-            $latestBreak->end_break = Carbon::now();
-            $latestBreak->save();
-
-            return redirect('/')->with('success', '休憩終了しました');
-        } else {
+        // 休憩記録が存在しない場合はエラーメッセージを表示してリダイレクト
+        if (!$latestBreak) {
             return redirect('/')->with('error', '休憩開始ボタンを押下してください');
         }
 
-        // $latestBreak = WorkBreak::where('attendance_id', Attendance::where('user_id', Auth::id())->latest()->first()->id)
-        //     ->whereNull('end_break')
-        //     ->latest()
-        //     ->first();
+        // 休憩終了時間を設定して保存
+        $latestBreak->end_break = Carbon::now();
+        $latestBreak->save();
 
-        // if ($latestBreak) {
-        //     $latestBreak->end_break = Carbon::now();
-        //     $latestBreak->save();
+        // 休憩開始フラグをセッションから削除
+        $request->session()->forget('is_break');
 
-        //     return redirect('/')->with('status', '休憩終了しました');
-        // } else {
-        //     return redirect('/')->with('error', '休憩開始ボタンを押下してください');
-        // }
+        return redirect()->back()->with('success', '休憩終了しました');
     }
-
 
     public function calculateDailyWorkTime()
     {

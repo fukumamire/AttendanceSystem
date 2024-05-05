@@ -58,20 +58,25 @@
         </form>
       </td>
     </tr>
-
-    <tr>
       <td>
         <form class="inner-items-lower" action="/start-break" method="POST">
           @csrf
-          <button type="submit">休憩開始</button>
+          @if(session('is_break'))
+            <button class="form__item-button" type="submit" name="start_break" disabled>休憩開始</button>
+          @else
+            <button class="form__item-button" type="submit" name="start_break">休憩開始</button>
+          @endif
         </form>
       </td>
       <td>
         <form class="inner-items-lower" action="/end-break" method="POST">
-          <input type="hidden" name="break_id"  value="{{ $break_id ?? '' }}">
-
           @csrf
-          <button type="submit">休憩終了</button>
+          <input type="hidden" name="break_id" value="{{ $break_id ?? '' }}">
+          @if(session('is_break'))
+            <button class="form__item-button" type="submit" name="end_break">休憩終了</button>
+          @else
+            <button class="form__item-button" type="submit" name="end_break" disabled>休憩終了</button>
+          @endif
         </form>
       </td>
     </tr>
