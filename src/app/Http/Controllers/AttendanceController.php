@@ -24,6 +24,9 @@ class AttendanceController extends Controller
             ->whereDate('start_work', $today)
             ->exists();
 
+        // nullの場合、falseにして勤務開始ボタンの有効化
+        $hasAttendanceToday = $hasAttendanceToday ?? false;
+
         return view('auth.stamp', compact('hasAttendanceToday'));
     }
 
