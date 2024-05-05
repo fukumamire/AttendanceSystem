@@ -74,7 +74,7 @@ class AttendanceController extends Controller
             $attendance->end_work = Carbon::now();
             $attendance->save();
 
-            return redirect('/')->with('status', '勤務終了しました');
+            return redirect('/')->with('success', '勤務終了しました');
         } else {
             return redirect('/')->with('error', '勤務開始または休憩終了ボタンを押してください。');
         }
@@ -89,7 +89,7 @@ class AttendanceController extends Controller
             $break->start_break = Carbon::now();
             $break->save();
 
-            return redirect('/')->with('status', '休憩開始しました');
+            return redirect('/')->with('success', '休憩開始しました');
         } else {
             return redirect('/')->with('error', '勤務開始時間が記録されていません。勤務開始ボタンを押下してください');
         }
@@ -102,7 +102,7 @@ class AttendanceController extends Controller
 
 
         if (!$latestAttendance) {
-            return redirect('/')->with('error', '休憩開始時間が記録されていません。休憩開始ボタンを押下してください');
+            return redirect('/')->with('success', '休憩開始時間が記録されていません。休憩開始ボタンを押下してください');
         }
 
         // 最新の休憩記録を取得
@@ -117,7 +117,7 @@ class AttendanceController extends Controller
             $latestBreak->end_break = Carbon::now();
             $latestBreak->save();
 
-            return redirect('/')->with('status', '休憩終了しました');
+            return redirect('/')->with('success', '休憩終了しました');
         } else {
             return redirect('/')->with('error', '休憩開始ボタンを押下してください');
         }

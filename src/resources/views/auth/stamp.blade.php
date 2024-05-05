@@ -21,9 +21,9 @@
 
 @section('content')
 <div class="stamp__content">
-  @if (session('status'))
+  @if (session('success'))
         <div class="alert-success">
-            {{ session('status') }}
+            {{ session('success') }}
         </div>
   @endif
 
@@ -44,12 +44,11 @@
       <td>
         <form class="inner-items-upper" action="/start-work" method="POST">
           @csrf
-          @if(!$hasAttendanceToday)
+          @if(!$hasAttendanceToday ?? '')
             <button class="form__item-button" type="submit" name="start_work">勤務開始</button>
           @else
             <button class="form__item-button" type="submit" name="start_work" disabled>勤務開始</button>
           @endif
-
         </form>
       </td>
       <td>

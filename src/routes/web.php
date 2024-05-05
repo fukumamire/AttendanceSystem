@@ -49,6 +49,7 @@ Route::get('/attendance', function () {
 
 
 //勤務時間関係
+Route::get('/', [AttendanceController::class, 'showStampPage'])->middleware('auth');
 Route::post('/start-work', [AttendanceController::class, 'startWork'])->middleware('auth');
 Route::post('/end-work', [AttendanceController::class, 'endWork'])->middleware('auth');
 Route::post('/start-break', [AttendanceController::class, 'startBreak'])->middleware('auth');
