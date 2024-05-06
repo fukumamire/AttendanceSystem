@@ -12,6 +12,7 @@ class AttendanceController extends Controller
 {
     public function showStampPage()
     {
+
         if (!Auth::check()) {
             return redirect('login');
         }
@@ -35,18 +36,19 @@ class AttendanceController extends Controller
             ->whereNotNull('end_break')
             ->exists();
 
-        // 休憩開始ボタンの有効化条件を調整
+        /// 休憩開始ボタンの有効化条件を調整
+        // 勤務開始後にのみ有効化され、休憩終了後にのみ再度有効化される
         $canStartBreak = $hasAttendanceToday && !$hasBreakToday && session('is_end_break', true);
-
         // 勤務開始ボタンの有効化条件を調整
         $canStartWork = !$hasAttendanceToday || ($hasAttendanceToday && $hasEndWorkToday);
 
-        // 休憩終了後にのみ再度有効化されるように、セッションを使用
-        $isEndBreak = session('is_end_break', false);
+        // 休憩終了ボタンの有効化条件を調整
+        // 休憩開始後にのみ有効化される
+        $canEndBreak = session('is_break', false);
 
-        return view('auth.stamp', compact('hasAttendanceToday', 'hasEndWorkToday', 'hasBreakToday', 'hasEndBreakToday', 'canStartBreak', 'canStartWork', 'isEndBreak'));
+        return view('auth.stamp', compact('hasAttendanceToday', 'hasEndWorkToday', 'hasBreakToday', 'hasEndBreakToday', 'canStartBreak', 'canStartWork', 'canEndBreak'));
     }
-    
+
     public function startWork(Request $request)
     {
         if (!Auth::check()) {
@@ -93,7 +95,11 @@ class AttendanceController extends Controller
         $break->start_break = Carbon::now();
         $break->save();
 
+        // 休憩開始時に、is_breakセッションをtrueに設定
         $request->session()->put('is_break', true);
+
+        $request->session()->put('is_end_break', false);
+
         return redirect()->back()->with('success', '休憩開始しました');
     }
 
@@ -113,8 +119,11 @@ class AttendanceController extends Controller
             $latestBreak->end_break = Carbon::now();
             $latestBreak->save();
 
+            // 休憩終了時に、is_breakセッションをfalseにリセット
+            $request->session()->put('is_break', false);
+
             $request->session()->put('is_end_break', true);
-            $request->session()->forget('is_break');
+
             return redirect()->back()->with('success', '休憩終了しました');
         }
 
