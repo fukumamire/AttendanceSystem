@@ -113,6 +113,7 @@ class AttendanceController extends Controller
 
         // 新しい休憩記録を作成
         $break = new WorkBreak();
+        $break->user_id = Auth::id();
         $break->attendance_id = $attendance->id;
         $break->start_break = Carbon::now();
         $break->save();
