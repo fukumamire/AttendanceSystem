@@ -24,11 +24,32 @@ class AttendanceController extends Controller
             ->whereDate('start_work', $today)
             ->exists();
 
+        // ユーザーが今日の出席記録に終了記録を登録しているかどうかを確認
+        $hasEndWorkToday = Attendance::where('user_id', Auth::id())
+            ->whereDate('start_work', $today)
+            ->whereNotNull('end_work')
+            ->exists();
+
+        // ユーザーが今日休憩開始時間を登録しているかどうかを確認
+        $hasBreakToday = WorkBreak::where('user_id', Auth::id())
+            ->whereDate('start_break', $today)
+            ->exists();
+
+        // ユーザーが今日の休憩終了時間を登録しているかどうかを確認
+        $hasEndBreakToday = WorkBreak::where('user_id', Auth::id())
+            ->whereDate('start_break', $today)
+            ->whereNotNull('end_break')
+            ->exists();
+
         // nullの場合、falseにして勤務開始ボタンの有効化
         $hasAttendanceToday = $hasAttendanceToday ?? false;
+        $hasEndWorkToday = $hasEndWorkToday ?? false;
+        $hasBreakToday = $hasBreakToday ?? false;
+        $hasEndBreakToday = $hasEndBreakToday ?? false;
 
-        return view('auth.stamp', compact('hasAttendanceToday'));
+        return view('auth.stamp', compact('hasAttendanceToday', 'hasEndWorkToday', 'hasBreakToday', 'hasEndBreakToday'));
     }
+
 
     public function startWork(Request $request)
     {

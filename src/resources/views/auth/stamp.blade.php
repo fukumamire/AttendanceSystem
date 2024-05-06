@@ -44,7 +44,7 @@
       <td>
         <form class="inner-items-upper" action="/start-work" method="POST">
           @csrf
-          @if(!$hasAttendanceToday ?? '')
+          @if(!$hasAttendanceToday || ($hasAttendanceToday && $hasEndWorkToday))
             <button class="form__item-button" type="submit" name="start_work">勤務開始</button>
           @else
             <button class="form__item-button" type="submit" name="start_work" disabled>勤務開始</button>
@@ -54,7 +54,11 @@
       <td>
         <form class="inner-items-upper" action="/end-work" method="POST">
           @csrf
-          <button type="submit">勤務終了</button>
+          @if($hasAttendanceToday && (!$hasBreakToday || ($hasBreakToday && $hasEndBreakToday)))
+            <button class="form__item-button" type="submit">勤務終了</button>
+          @else
+            <button class="form__item-button" type="submit" disabled>勤務終了</button>
+          @endif
         </form>
       </td>
     </tr>

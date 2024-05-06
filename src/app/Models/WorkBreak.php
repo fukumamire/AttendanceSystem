@@ -9,10 +9,14 @@ class WorkBreak extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['attendance_id', 'start_break', 'end_break'];
+    protected $fillable = ['user_id', 'attendance_id', 'start_break', 'end_break'];
 
     public function attendance()
     {
         return $this->belongsTo(Attendance::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
