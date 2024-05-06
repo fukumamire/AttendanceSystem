@@ -41,13 +41,16 @@ class AttendanceController extends Controller
             ->whereNotNull('end_break')
             ->exists();
 
+        // 休憩終了ボタンが押下されたかどうかをセッションから取得
+        $isEndBreak = session('is_end_break', false);
+
         // nullの場合、falseにして勤務開始ボタンの有効化
         $hasAttendanceToday = $hasAttendanceToday ?? false;
         $hasEndWorkToday = $hasEndWorkToday ?? false;
         $hasBreakToday = $hasBreakToday ?? false;
         $hasEndBreakToday = $hasEndBreakToday ?? false;
 
-        return view('auth.stamp', compact('hasAttendanceToday', 'hasEndWorkToday', 'hasBreakToday', 'hasEndBreakToday'));
+        return view('auth.stamp', compact('hasAttendanceToday', 'hasEndWorkToday', 'hasBreakToday', 'hasEndBreakToday', 'isEndBreak'));
     }
 
 
@@ -153,6 +156,9 @@ class AttendanceController extends Controller
 
         // 休憩開始フラグをセッションから削除
         $request->session()->forget('is_break');
+
+        // ユーザーが休憩を終了した後にのみ勤務終了ボタンを有効化
+        $request->session()->put('is_end_break', true);
 
         return redirect()->back()->with('success', '休憩終了しました');
     }
