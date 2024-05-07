@@ -25,7 +25,22 @@
     margin-right: 0; /* 最後のリンクには右側の余白を追加しない */
 }
 
+.header__wrap {
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    width: 80%;
+    margin: auto;
+}
 
+.date__change-button {
+    padding: 0 15px;
+    font-size: 20px;
+    color: blue;
+    border: 1px solid blue;
+    background-color: white;
+}
 
 
 .table__wrap {
@@ -38,4 +53,12 @@
 
 .attendance__table {
     width: 100%;
+}
+.table__header,
+.table__item {
+    width: 20%;
+    text-align: left;
+    padding-left: 5%;
+    height: 80px;
+    border-top: 1px 
 }
