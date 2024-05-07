@@ -43,8 +43,8 @@ class AttendanceController extends Controller
         $canEndWork = $hasAttendanceToday && (!$hasBreakToday || ($hasBreakToday && $hasEndBreakToday));
 
         // 休憩開始ボタンの有効化条件を調整
-        // 勤務開始後にのみ有効化され、休憩終了後にのみ再度有効化される
-        $canStartBreak = $hasAttendanceToday && !$hasBreakToday && session('is_end_break', true);
+        $canStartBreak = $hasAttendanceToday && !$hasEndWorkToday && ($hasEndBreakToday || !$hasBreakToday);
+
 
         // 休憩終了ボタンの有効化条件を調整
         // 休憩開始後にのみ有効化される
