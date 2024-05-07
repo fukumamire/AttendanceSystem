@@ -54,7 +54,7 @@
       <td>
         <form class="inner-items-upper" action="/end-work" method="POST">
           @csrf
-          @if($hasAttendanceToday && (!$hasBreakToday || ($hasBreakToday && $hasEndBreakToday) || $canEndBreak))
+          @if($canEndWork)
             <button class="form__item-button" type="submit">勤務終了</button>
           @else
             <button class="form__item-button" type="submit" disabled>勤務終了</button>
@@ -62,6 +62,7 @@
         </form>
       </td>
     </tr>
+    <tr>
       <td>
         <form class="inner-items-lower" action="/start-break" method="POST">
           @csrf
@@ -84,6 +85,5 @@
         </form>
       </td>
     </tr>
-  </table>  
-</div>
+  </table>
 @endsection

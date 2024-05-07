@@ -19,7 +19,15 @@
 @endsection
 
 @section('content')
-<div class="table__wrap">
+    <form class="header__wrap" action="{{ route('the-date') }}" method="post">
+        @csrf
+        <button class="date__change-button" name="prevDate"><</button>
+        <input type="hidden" name="displayDate" value="{{ $displayDate }}">
+        <p class="header__text">{{ $displayDate->format('Y-m-d') }}</p>
+        <button class="date__change-button" name="nextDate">></button>
+    </form>
+
+    <div class="table__wrap">
         <table class="attendance__table">
             <tr class="table__row">
                 <th class="table__header">名前</th>

@@ -54,3 +54,5 @@ Route::post('/start-work', [AttendanceController::class, 'startWork'])->middlewa
 Route::post('/end-work', [AttendanceController::class, 'endWork'])->middleware('auth');
 Route::post('/start-break', [AttendanceController::class, 'startBreak'])->middleware('auth');
 Route::post('/end-break', [AttendanceController::class, 'endBreak'])->middleware('auth');
+
+Route::post('/the-date', [AttendanceController::class, 'attendanceList'])->name('the-date');

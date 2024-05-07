@@ -12,7 +12,6 @@ class AttendanceController extends Controller
 {
     public function showStampPage()
     {
-
         if (!Auth::check()) {
             return redirect('login');
         }
@@ -36,17 +35,22 @@ class AttendanceController extends Controller
             ->whereNotNull('end_break')
             ->exists();
 
-        /// 休憩開始ボタンの有効化条件を調整
+        // 勤務開始ボタンの有効化条件を調整
+        $canStartWork = !$hasAttendanceToday;
+
+        // 勤務終了ボタンの有効化条件を調整
+        // 勤務開始後に有効化または休憩時間があれば休憩終了後に有効化
+        $canEndWork = $hasAttendanceToday && (!$hasBreakToday || ($hasBreakToday && $hasEndBreakToday));
+
+        // 休憩開始ボタンの有効化条件を調整
         // 勤務開始後にのみ有効化され、休憩終了後にのみ再度有効化される
         $canStartBreak = $hasAttendanceToday && !$hasBreakToday && session('is_end_break', true);
-        // 勤務開始ボタンの有効化条件を調整
-        $canStartWork = !$hasAttendanceToday || ($hasAttendanceToday && $hasEndWorkToday);
 
         // 休憩終了ボタンの有効化条件を調整
         // 休憩開始後にのみ有効化される
         $canEndBreak = session('is_break', false);
 
-        return view('auth.stamp', compact('hasAttendanceToday', 'hasEndWorkToday', 'hasBreakToday', 'hasEndBreakToday', 'canStartBreak', 'canStartWork', 'canEndBreak'));
+        return view('auth.stamp', compact('hasAttendanceToday', 'hasEndWorkToday', 'hasBreakToday', 'hasEndBreakToday', 'canStartWork', 'canEndWork', 'canStartBreak', 'canEndBreak'));
     }
 
     public function startWork(Request $request)
@@ -149,14 +153,14 @@ class AttendanceController extends Controller
         return view('Auth.date', compact('hours', 'minutes'));
     }
 
-    public function attendanceList()
+    public function attendanceList(Request $request)
     {
-        $displayDate = Carbon::now()->toDateString();
+        $displayDate = $request->input('displayDate', Carbon::now()->toDateString());
         $attendances = Attendance::with('user')
             ->whereDate('start_work', $displayDate)
             ->orderBy('start_work', 'desc')
             ->get();
 
-        return view('auth.date', compact('attendances'));
+        return view('auth.date', compact('attendances', 'displayDate'));
     }
 }
